@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const userModel = require('./models/userModel');
+const jwt = require('jsonwebtoken');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -29,6 +30,8 @@ app.post("/create", (req, res) => {
                 age,
             })
 
+            let token = jwt.sign({email}, "secret");
+            res.cookie("token",token);
             res.send(user);
         })
     })
