@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const userModel = require('./models/userModel');
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -12,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-    res.send("hi")
+    res.render("index")
 });
 
 app.listen(3000);
