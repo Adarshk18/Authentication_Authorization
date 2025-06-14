@@ -57,6 +57,8 @@ app.post("/login", async (req, res) => {
 
     bcrypt.compare(req.body.password, user.password , (err,result)=>{
         if(result){
+            let token = jwt.sign({email: user.email}, "fgfgfg");
+            res.cookie("token",token);
             res.status(200).send({message: "logged in successfully.."});
         }
         res.status(404).send({error: "Not authorized.."})
