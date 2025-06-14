@@ -37,8 +37,37 @@ app.post("/create", (req, res) => {
     })
 });
 
-app.get("/logout",(req,res)=>{
+
+
+app.get("/login", (req, res) => {
+    res.render("login");
+})
+
+app.post("/login", async (req, res) => {
     
+
+    let user = await userModel.findOne({ email: req.body.email });
+    
+    console.log(user);
+
+    if(!user){
+        res.status(404).send({message: "Something went wrong."}); //if we writes user does not exists then malicious attacker will know the user does not exists the  they will try with diff one
+
+    }
+
+    bcrypt.compare(req.body.password, user.password , (err,result)=>{
+        if(result){
+            res.status(200).send({message: "logged in successfully.."});
+        }
+        res.status(404).send({error: "Not authorized.."})
+    });
+
+
+})
+
+app.get("/logout", (req, res) => {
+    res.cookie("token", "");
+    res.render("/");
 })
 
 app.listen(3000);
