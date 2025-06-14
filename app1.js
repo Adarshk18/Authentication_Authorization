@@ -30,13 +30,15 @@ app.post("/create", (req, res) => {
                 age,
             })
 
-            let token = jwt.sign({email}, "secret");
-            res.cookie("token",token);
+            let token = jwt.sign({ email }, "secret");
+            res.cookie("token", token);
             res.send(user);
         })
     })
+});
 
-
+app.get("/logout",(req,res)=>{
+    
 })
 
 app.listen(3000);
